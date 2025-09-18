@@ -28,7 +28,7 @@ echo "✅ LAMP stack installed."
 # Database setup
 DB_NAME="employeedb"
 DB_USER="empuser"
-DB_PASS="networkB2@"
+DB_PASS="7muf8BwD6@2q7"
 
 echo "🚀 Setting up MySQL database and user..."
 sudo mysql -u root <<EOF
@@ -70,7 +70,7 @@ cat << 'PHP' | sudo tee $APP_DIR/db.php > /dev/null
 <?php
 $host = "localhost";
 $user = "empuser";
-$pass = "networkB2@";
+$pass = "7muf8BwD6@2q7";
 $dbname = "employeedb";
 
 $conn = new mysqli($host, $user, $pass, $dbname);
