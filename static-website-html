@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Elegant Static Demo</title>
+  <meta name="description" content="A simple static website with modern visual effects: animated gradient, glass cards, floating blobs and subtle interactions." />
+
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-1: #0f172a; /* deep navy */
+      --glass: rgba(255,255,255,0.06);
+      --glass-2: rgba(255,255,255,0.04);
+      --accent: linear-gradient(90deg,#7c3aed,#06b6d4);
+      --card-radius: 18px;
+      --soft-shadow: 0 8px 30px rgba(2,6,23,0.6);
+      --glass-border: rgba(255,255,255,0.06);
+      color-scheme: dark;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      min-height:100vh;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(124,58,237,0.12), transparent 8%),
+                  radial-gradient(1000px 500px at 90% 90%, rgba(6,182,212,0.08), transparent 10%),
+                  var(--bg-1);
+      display:flex;align-items:center;justify-content:center;
+      padding:48px; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* floating colorful blobs */
+    .blobs{position:fixed;inset:0;pointer-events:none;z-index:0}
+    .blob{position:absolute;border-radius:50%;filter:blur(40px);opacity:0.9;mix-blend-mode:screen;transform:translate3d(0,0,0)}
+    .b1{width:520px;height:520px;left:-10%;top:-20%;background:rgba(124,58,237,0.32);animation:float1 12s ease-in-out infinite}
+    .b2{width:420px;height:420px;right:-8%;bottom:-10%;background:rgba(6,182,212,0.28);animation:float2 14s linear infinite}
+    .b3{width:280px;height:280px;left:40%;top:60%;background:rgba(236,72,153,0.26);animation:float3 10s ease-in-out infinite}
+
+    @keyframes float1{0%{transform:translateY(0) scale(1)}50%{transform:translateY(40px) scale(1.05)}100%{transform:translateY(0) scale(1)}}
+    @keyframes float2{0%{transform:translateY(0) scale(1)}50%{transform:translateY(-30px) scale(0.98)}100%{transform:translateY(0) scale(1)}}
+    @keyframes float3{0%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(20px) rotate(8deg)}100%{transform:translateY(0) rotate(0deg)}}
+
+    /* layout */
+    .container{
+      position:relative;z-index:1;max-width:1100px;width:100%;
+      display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center;
+    }
+
+    .card-hero{
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:var(--card-radius);padding:48px;border:1px solid var(--glass-border);
+      box-shadow:var(--soft-shadow);backdrop-filter: blur(8px) saturate(120%);
+    }
+
+    h1{margin:0;font-size:clamp(28px,5vw,48px);line-height:1.02;font-weight:800;letter-spacing:-0.02em}
+    p.lead{margin:12px 0 24px;color:rgba(255,255,255,0.75);font-weight:400}
+
+    .cta-row{display:flex;gap:14px;align-items:center}
+    .btn{
+      padding:12px 18px;border-radius:12px;border:0;cursor:pointer;font-weight:600;display:inline-flex;align-items:center;gap:10px;backdrop-filter: blur(6px);
+    }
+    .btn-primary{background:var(--accent);color:white;box-shadow:0 8px 20px rgba(7,16,40,0.6)}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);color:rgba(255,255,255,0.9)}
+
+    /* subtle typing cursor */
+    .type{display:inline-block;position:relative;white-space:nowrap;overflow:hidden}
+    .type::after{content:'';width:2px;height:1.05em;background:linear-gradient(#fff,#fff);display:inline-block;vertical-align:middle;margin-left:8px;animation:blink 1.1s steps(2) infinite}
+    @keyframes blink{50%{opacity:0}}
+
+    /* right column cards */
+    .aside{
+      display:flex;flex-direction:column;gap:18px;
+    }
+    .mini-card{padding:18px;border-radius:14px;background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));border:1px solid var(--glass-border);backdrop-filter: blur(6px);box-shadow:0 6px 22px rgba(2,6,23,0.55)}
+    .mini-card h3{margin:0;font-size:16px}
+    .features{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+    .feature{padding:10px;border-radius:10px;background:var(--glass-2);text-align:center;font-weight:600}
+
+    /* cards grid below hero */
+    .grid{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+    .tile{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid var(--glass-border);transition:transform 300ms cubic-bezier(.2,.9,.2,1), box-shadow 300ms}
+    .tile:hover{transform:translateY(-8px) scale(1.01);box-shadow:0 18px 50px rgba(2,6,23,0.6)}
+
+    /* small footer */n
+    .foot{margin-top:18px;color:rgba(255,255,255,0.55);font-size:13px}
+
+    /* responsive */
+    @media (max-width:980px){
+      .container{grid-template-columns:1fr;}
+      .aside{order:2}
+    }
+
+    /* micro-interaction: rotate with pointer via JS */
+    .interactive{transform-style:preserve-3d;transition:transform 300ms cubic-bezier(.2,.9,.2,1)}
+
+    /* decorative code block */
+    pre{background:rgba(0,0,0,0.35);padding:12px;border-radius:10px;overflow:auto}
+    code{color:#d1fae5}
+
+  </style>
+</head>
+<body>
+
+  <div class="blobs" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+  </div>
+
+  <main class="container" role="main">
+
+    <section class="card-hero interactive" id="hero">
+      <header style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+        <div style="display:flex;gap:12px;align-items:center">
+          <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(45deg,#7c3aed,#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:800;color:white">ES</div>
+          <div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.85);font-weight:700">Elegant Simple</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.45)">Static website demo</div>
+          </div>
+        </div>
+        <nav aria-label="Primary" style="display:flex;gap:8px">
+          <button class="btn btn-ghost" onclick="scrollToSection('features')">Features</button>
+          <button class="btn btn-ghost" onclick="scrollToSection('examples')">Examples</button>
+        </nav>
+      </header>
+
+      <h1>Beautiful, fast <span style="display:block;color:transparent;background-clip:text;background-image:var(--accent);-webkit-background-clip:text">static experiences</span></h1>
+      <p class="lead">A single-file static template with subtle motion, glassy UI and small JS interactions. Use it as a landing, a portfolio intro or a small product page.</p>
+
+      <div class="cta-row">
+        <button class="btn btn-primary" onclick="downloadDemo()">Download HTML</button>
+        <button class="btn btn-ghost" onclick="copyHTML()">Copy to clipboard</button>
+      </div>
+
+      <div class="grid" style="margin-top:22px" id="features">
+        <div class="tile">
+          <h4 style="margin:0 0 8px">Fluid background</h4>
+          <div style="color:rgba(255,255,255,0.7);font-size:14px">Animated blurred blobs and gradients that bring depth without heavy assets.</div>
+        </div>
+        <div class="tile">
+          <h4 style="margin:0 0 8px">Glass UI</h4>
+          <div style="color:rgba(255,255,255,0.7);font-size:14px">Soft glass cards with subtle borders and shadow for a breathable layout.</div>
+        </div>
+        <div class="tile">
+          <h4 style="margin:0 0 8px">Micro-interactions</h4>
+          <div style="color:rgba(255,255,255,0.7);font-size:14px">Hover lifts, pointer-based parallax and accessible buttons.</div>
+        </div>
+        <div class="tile">
+          <h4 style="margin:0 0 8px">Single-file</h4>
+          <div style="color:rgba(255,255,255,0.7);font-size:14px">Drop this HTML into any static host (GitHub Pages, Netlify) and you're live.</div>
+        </div>
+      </div>
+
+      <p class="foot">Tip: Try moving your pointer around the hero area to see a 3D tilt effect.</p>
+    </section>
+
+    <aside class="aside">
+      <div class="mini-card interactive" id="mini">
+        <h3>Quick stats</h3>
+        <div class="features">
+          <div class="feature"><strong>90ms</strong><div style="font-size:12px">avg paint</div></div>
+          <div class="feature"><strong>0 external</strong><div style="font-size:12px">assets</div></div>
+          <div class="feature"><strong>1 file</strong><div style="font-size:12px">single HTML</div></div>
+          <div class="feature"><strong>Responsive</strong><div style="font-size:12px">mobile ready</div></div>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <h3>Preview code</h3>
+        <pre><code>&lt;header&gt;...&lt;/header&gt;</code></pre>
+        <div style="display:flex;gap:8px;margin-top:12px">
+          <button class="btn btn-ghost" onclick="showSnippet()">Show snippet</button>
+          <button class="btn btn-ghost" onclick="downloadDemo()">Download</button>
+        </div>
+      </div>
+
+      <div class="mini-card">
+        <h3>About</h3>
+        <p style="margin:8px 0 0;color:rgba(255,255,255,0.7);font-size:14px">Made for demos and small microsites. Easy to extend with your content and assets.</p>
+      </div>
+    </aside>
+
+    <!-- full-width examples below (wrap by using grid) -->
+    <section style="grid-column:1/-1;margin-top:34px" id="examples">
+      <div style="display:flex;gap:18px;flex-wrap:wrap">
+        <div style="flex:1;min-width:280px" class="tile" aria-hidden>
+          <h4 style="margin:0 0 8px">Project card</h4>
+          <p style="color:rgba(255,255,255,0.75)">Use the tile component for case studies — add an image and a subtle overlay for depth.</p>
+        </div>
+        <div style="flex:1;min-width:280px" class="tile">
+          <h4 style="margin:0 0 8px">Pricing mock</h4>
+          <p style="color:rgba(255,255,255,0.75)">Simple cards with CTA — perfect for small products and landing funnels.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script>
+    // small utility: tilt/3D parallax on pointer within interactive elements
+    const interactives = document.querySelectorAll('.interactive');
+    interactives.forEach(el=>{
+      el.addEventListener('pointermove', (e)=>{
+        const rect = el.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 .. 0.5
+        const y = (e.clientY - rect.top) / rect.height - 0.5;
+        const rx = -y * 8; // rotate X
+        const ry = x * 12; // rotate Y
+        el.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(6px)`;
+      });
+      el.addEventListener('pointerleave', ()=>{ el.style.transform = ''; });
+    });
+
+    // copy entire HTML to clipboard (for quick use)
+    async function copyHTML(){
+      try{
+        const html = `<!doctype html>\n${document.documentElement.outerHTML}`;
+        await navigator.clipboard.writeText(html);
+        alert('HTML copied to clipboard — paste into a file (index.html) and open in a browser.');
+      }catch(e){
+        alert('Copy failed — please select the page HTML manually.');
+      }
+    }
+
+    // download this page as a file
+    function downloadDemo(){
+      const html = '<!doctype html>\n' + document.documentElement.outerHTML;
+      const blob = new Blob([html],{type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download='elegant-static-demo.html'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    }
+
+    function scrollToSection(id){
+      document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'center'});
+    }
+
+    function showSnippet(){
+      alert('This demo is intentionally compact. Use the canvas editor to view and copy any section you like.');
+    }
+  </script>
+
+</body>
+</html>
