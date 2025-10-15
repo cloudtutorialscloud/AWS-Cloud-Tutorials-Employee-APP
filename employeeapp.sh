@@ -429,9 +429,14 @@ header("Location: index.php");
 exit;
 ?>
 PHP
-
+# ✅ Add background image from S3 to all PHP pages
+S3_IMAGE_URL="https://prodfileslulu.s3.ap-south-1.amazonaws.com/images.jpg"
+for file in index.php register.php dashboard.php details.php admin.php edit_employee.php; do
+  sudo sed -i "/<head>/a <style>body { background: url('$S3_IMAGE_URL') no-repeat center center fixed; background-size: cover; }</style>" $APP_DIR/$file
+done
 sudo chown -R www-data:www-data $APP_DIR
 sudo chmod -R 755 $APP_DIR
 
 echo "✅ Employee App deployed at: http://YOUR_SERVER_IP/employee_app"
 echo "🔑 Admin Login: username=admin, password=admin123"
+echo "🖼️ Background image applied from: $S3_IMAGE_URL"
