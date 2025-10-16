@@ -434,4 +434,3 @@ sudo chmod -R 755 $APP_DIR
 
 echo "✅ Employee App deployed at: http://YOUR_SERVER_IP/employee_app"
 echo "🔑 Admin Login: username=admin, password=admin123"
-echo "🖼️ Background image applied from: $S3_IMAGE_URL"
