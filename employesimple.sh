@@ -68,9 +68,9 @@ echo "🚀 Deploying Employee App..."
 # db.php
 cat << 'PHP' | sudo tee $APP_DIR/db.php > /dev/null
 <?php
-$host = "localhost";
-$user = "empuser";
-$pass = "7muf8BwD6@2q7";
+$host = "database-1.ckzlx11n8uhe.us-east-1.rds.amazonaws.com";
+$user = "admin";
+$pass = "networkB2#";
 $dbname = "employeedb";
 
 $conn = new mysqli($host, $user, $pass, $dbname);
