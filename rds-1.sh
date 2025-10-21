@@ -28,7 +28,7 @@ echo "✅ Apache & PHP installed successfully."
 # ------------------------------------------------------------------------------
 # 1️⃣ RDS CONFIGURATION — replace with your real credentials
 # ------------------------------------------------------------------------------
-RDS_ENDPOINT="study-db.ckzlx11n8uhe.us-east-1.rds.amazonaws.com"
+RDS_ENDPOINT="database-1.ckzlx11n8uhe.us-east-1.rds.amazonaws.com"
 RDS_USER="admin"
 RDS_PASS="networkB2#"
 RDS_DBNAME="employeedb"
