@@ -430,7 +430,7 @@ exit;
 ?>
 PHP
 # ✅ Add background image from S3 to all PHP pages
-S3_IMAGE_URL="https://12345lulu789.s3.us-east-1.amazonaws.com/images.jpg"
+S3_IMAGE_URL="https://qwertylulu123.s3.us-east-1.amazonaws.com/images.jpg"
 for file in index.php register.php dashboard.php details.php admin.php edit_employee.php; do
   sudo sed -i "/<head>/a <style>body { background: url('$S3_IMAGE_URL') no-repeat center center fixed; background-size: cover; }</style>" $APP_DIR/$file
 done
